@@ -41,9 +41,21 @@ export default class MetodosFetch {
         return response;
     };
 
+    static updateSolicitudFechaCierre = async (dataSolicitud) => {
+
+        console.log('dataSolicitud: ',dataSolicitud)
+        let response = await fetch(API_URL + "/solicitud/fechaCierreSolicitud", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dataSolicitud)
+        })
+
+        return response;
+    };
+
     static updateSolicitudDetalle = async (solDetalle) => {
 
-
+        console.log('solDetalle: ',solDetalle)
         let response = await fetch(API_URL + "/solicitudDetalles/" + solDetalle.id, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },

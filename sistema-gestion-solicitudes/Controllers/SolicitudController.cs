@@ -94,8 +94,6 @@ namespace sistema_gestion_solicitudes.Controllers
         }
 
 
-
-
         [HttpPost]
         [Route("/api/Solicitud/Create")]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -186,6 +184,51 @@ namespace sistema_gestion_solicitudes.Controllers
         private bool SolicitudExists(int id)
         {
             return (DBContext.Solicituds?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        public class UpdateFechaCierreRequest
+        {
+            public int SolicitudId { get; set; }
+            public string FechaCierre { get; set; }
+        }
+
+        [HttpPost]
+        [Route("fechaCierreSolicitud")]
+        public async Task<IActionResult> UpdateFechaCierre(UpdateFechaCierreRequest updateFechaCierreRequest)
+        {
+            if (!string.IsNullOrEmpty(updateFechaCierreRequest.FechaCierre))
+            {
+                // Intenta convertir la fecha de string a DateTime
+                if (DateTime.TryParse(updateFechaCierreRequest.FechaCierre, out DateTime fechaCierre))
+                {
+                    var solicitud = DBContext.Solicituds
+                                .FirstOrDefault(s => s.Id == updateFechaCierreRequest.SolicitudId);
+
+                    if (solicitud != null)
+                    {
+                        // Actualiza la fecha de cierre de la solicitud
+                        solicitud.FechaCierre = fechaCierre;
+
+                        // Guarda los cambios en la base de datos
+                        DBContext.Update(solicitud);
+                        await DBContext.SaveChangesAsync();
+
+                        return Ok(solicitud); // Retorna la solicitud actualizada
+                    }
+                    else
+                    {
+                        return NotFound("Solicitud no encontrada.");
+                    }
+                }
+                else
+                {
+                    return BadRequest("Formato de fecha inválido.");
+                }
+            }
+            else
+            {
+                return BadRequest("Fecha de cierre es requerida.");
+            }
         }
 
 

@@ -1,7 +1,7 @@
 ﻿import { Box, Typography } from "@mui/material";
 import { TypographyTitle, ButtonStyled, BtnCancel } from "../../../../../Utils/CustomStyles";
 import FormikControl from "../../../../../components/Form/FormControl";
-import { Formik, Form } from "formik";
+import { Formik, Form,Field } from "formik";
 import ConfirmDialog from "../../../../../components/Dialog/ConfirmDialog";
 import { useState, useEffect, useCallback } from "react";
 import { API_URL } from "../../../../../Utils/Variables";
@@ -10,6 +10,8 @@ import MetodosFetch from "../../../../../Servicios/MetodosFetch";
 import AnexosList from "../../Secciones/AnexosSection";
 import DocumentsList from "../../Secciones/DocumentosSection";
 import Swal from 'sweetalert2'
+
+
 
 
 
@@ -171,6 +173,7 @@ const VistaIniciada = (props) => {
 
 
     const onSubmit = async (values, { resetForm }) => {
+        console.log(('values: ',values))
         updateDetalles(values)  
     };
 
@@ -208,7 +211,22 @@ const VistaIniciada = (props) => {
             solicitud.solicitudDetalle.otrosArchivos = false;
             solicitud.solicitudDetalle.archivosSolicitados = ""
         }
+
+        console.log('fechaHora: ',values.fechaHora)
+        console.log('solicitud: ',solicitud)
+
+        let dataSolicitud={
+            'SolicitudId': solicitud.id,
+            'FechaCierre': values.fechaHora
+        }
+        
+        solicitud.solicitudDetalle['fechaCierre']=values.fechaHora;
+
+
         let resp = await MetodosFetch.updateSolicitudDetalle(solicitud.solicitudDetalle);
+        let resp2 = await MetodosFetch.updateSolicitudFechaCierre(dataSolicitud);
+        console.log('resp2: ',resp2)
+
         if (resp.ok) {
             if (values.anexos.length !== 0) {
                 addAnexos(values.anexos)
@@ -239,9 +257,21 @@ const VistaIniciada = (props) => {
                         onSubmit={onSubmit}
                         validationSchema={validationSchema}
                     >
-                        {({ values }) => {
+                        {({ values ,setFieldValue}) => {
                             return (
                                 <Form>
+                                    {/* Agrega aquí el nuevo campo de fecha y hora */}
+                                    <TypographyTitle>Fecha de cierre de solicitud</TypographyTitle>
+                                    {/* Campo de Fecha y Hora */}
+                                    <Box sx={{ mb: 2 }}>
+                                        <label htmlFor="fechaHora">Seleccione la fecha y hora:</label>
+                                        <Field
+                                            type="datetime-local"
+                                            name="fechaHora"
+                                            id="fechaHora"
+                                            style={{ marginLeft: 10 }} // Ajusta el estilo según necesites
+                                        />
+                                    </Box>
                                     <Box sx={{ display: "flex", flexDirection: "column" }}>
                                         <TypographyTitle> Anexos por Solicitar al Investigador</TypographyTitle>
 
