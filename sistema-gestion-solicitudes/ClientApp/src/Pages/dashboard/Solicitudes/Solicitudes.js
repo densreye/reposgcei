@@ -78,7 +78,7 @@ const headerSolicitudes = [
     {
         id: 6,
         field: "Archivo",
-        headerName: "Resolución",
+        headerName: "Fecha de Resolución",
         headerAlign: 'center',
         type: "string",
         width: 150,
@@ -86,17 +86,13 @@ const headerSolicitudes = [
         renderCell: (params) => {
             return (
                 <>
-                    {
-                        params.row.resolucion!=null ?
-                            <IconButton>
-                                <FileCopyIcon sx={{ color: '#17285e' }} />
-                            </IconButton>
-                                        
+                    {params.row.fechaResolucion != null ?
+                        <>{moment(params.row.fechaResolucion).format("DD-MM-YYYY")}</>
                             :
-                            <>---</>
+                            <>--</>  
                     }
                 </>
-
+                
             );
         },
 

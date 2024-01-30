@@ -19,6 +19,8 @@ public partial class Solicitud
 
     public DateTime? FechaCierre { get; set; }
 
+    public DateTime? FechaResolucion { get; set; }
+
     public bool? Apelacion { get; set; }
 
     //Navigation properties for User

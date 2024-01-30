@@ -95,38 +95,40 @@ const VistaResolucion = (props) => {
 
     const onSubmit = async (values) => {
 
-        const files = [];
-        values.adicionalFiles.forEach((file) => {
-            files.push({
-                Nombre: file.name,
-                solicitudDetalleId: solicitud.solicitudDetalle.id,
-                URL: '',
-                Extension: (file.name).split('.').pop(),
-                UsuarioId: 1,
-                TipoArchivoId: 4,
-            })
+        console.log('values: ',values)
+        
+        // const files = [];
+        // values.adicionalFiles.forEach((file) => {
+        //     files.push({
+        //         Nombre: file.name,
+        //         solicitudDetalleId: solicitud.solicitudDetalle.id,
+        //         URL: '',
+        //         Extension: (file.name).split('.').pop(),
+        //         UsuarioId: 1,
+        //         TipoArchivoId: 4,
+        //     })
 
-        })
+        // })
 
-        if (values.resolucionFile.length !== 0 && files.length !== 0) {
-            let res = await MetodosFetch.createArchivos(files);
-            if (res.ok) {
-                createResolucion(values);
-            } else {
+        // if (values.resolucionFile.length !== 0 && files.length !== 0) {
+        //     let res = await MetodosFetch.createArchivos(files);
+        //     if (res.ok) {
+        //         createResolucion(values);
+        //     } else {
 
-            }
-        }
-        else if (files.length !== 0) {
-            let res = await MetodosFetch.createArchivos(files);
-            if (res.ok) {
-                fetchData();
-            } else {
+        //     }
+        // }
+        // else if (files.length !== 0) {
+        //     let res = await MetodosFetch.createArchivos(files);
+        //     if (res.ok) {
+        //         fetchData();
+        //     } else {
 
-            }
-        }
-        else if (values.resolucionFile.length !== 0) {
-            createResolucion(values);
-        }
+        //     }
+        // }
+        // else if (values.resolucionFile.length !== 0) {
+        //     createResolucion(values);
+        // }
     
        
 

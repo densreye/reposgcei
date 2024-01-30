@@ -140,9 +140,9 @@ namespace sistema_gestion_solicitudes.Controllers
             {
                 solicitud.FechaRevision = date.ToLocalTime();
             }
-            else if (solicitud.EstadoId == 7 && solicitud.FechaCierre == null)
+            else if (solicitud.EstadoId == 7)
             {              
-                solicitud.FechaCierre = date.ToLocalTime();
+                solicitud.FechaResolucion = date.ToLocalTime();
                 //notifico
                 var nuevaNotificacion = new Notificaciones
                 {
