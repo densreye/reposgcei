@@ -427,7 +427,7 @@ namespace sistema_gestion_solicitudes.Controllers
             string body = requestBody.Mensaje + ". Link de registro: " + link;
 
 
-            //await _emailSender.SendEmailAsync(requestBody.Email, subject, body);
+            await _emailSender.SendEmailAsync(requestBody.Email, subject, body);
 
             //obtengo al usuario presidente
             var presidente = DBContext.Users.FirstOrDefault(u => u.Roles.Any(r => r.Id == 1));

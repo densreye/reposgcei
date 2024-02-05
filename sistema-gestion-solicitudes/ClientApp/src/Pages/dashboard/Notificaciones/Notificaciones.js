@@ -162,13 +162,13 @@ class Notificaciones extends Component {
                 field: "envia",
                 headerName: "Enviado Por",
                 type: "string",
-                width: 200,
+                width: 100,
             },
             {
                 field: "mensaje",
                 headerName: "Mensaje",
                 type: "string",
-                width: 200,
+                width: 700,
             },
             
             {
